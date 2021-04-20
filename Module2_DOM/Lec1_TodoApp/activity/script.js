@@ -18,7 +18,7 @@ function addTodo()
         // delete li tag which contains the todo item
         let btnTag = document.createElement("button");
         btnTag.classList.add("delete-todo");
-        btnTag.innerHTML = "DELETE";
+        btnTag.innerHTML = '<i class="fas fa-trash-alt fa-2x"></i>';
         btnTag.addEventListener("click", function(e){
             e.target.parentNode.remove();
             console.log("Delete clicked");
