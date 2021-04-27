@@ -1,12 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
-
-*{
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap'); * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
   --dark-gray: #2d3436;
   --light-gray: #636e72;
   font-family: 'Montserrat', sans-serif;
+  --shadow-15 : 0 0 15px rgba(0,0,0,0.8);
 }
 
 .content {
@@ -20,12 +19,17 @@
   align-items: center;
 }
 
-.searchbar{
+.searchbar {
   display: flex;
   justify-content: space-around;
   height: 50%;
   width: 30%;
   transition: transform 0.3s;
+  border-top-left-radius: 2rem;
+  border-bottom-left-radius: 2rem;
+  border-top-right-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+  box-shadow: var(--shadow-15);
 }
 
 .search {
@@ -40,7 +44,7 @@
   text-align: center;
 }
 
-.searchButton{
+.searchButton {
   position: relative;
   min-width: 20%;
   background: var(--light-gray);
@@ -49,9 +53,11 @@
   border-top-right-radius: 2rem;
   border-bottom-right-radius: 2rem;
   opacity: 0.8;
+  font-size: 1.2rem;
+  cursor: pointer;
 }
 
-.searchbar:hover{
+.searchbar:hover {
   transform: scale(1.2);
 }
 
@@ -60,19 +66,22 @@
   min-width: 30%;
   min-height: 50%;
   display: flex;
-  justify-content:space-evenly;
+  justify-content: space-evenly;
   align-items: center;
   border-top-left-radius: 2rem;
   border-bottom-left-radius: 2rem;
   border-top-right-radius: 2rem;
   border-bottom-right-radius: 2rem;
   transition: all .2s ease-in-out;
+  box-shadow: var(--shadow-15);
 }
 
 .filter {
+  cursor: pointer;
   min-width: 2rem;
   min-height: 2rem;
   opacity: 0.8;
+  box-shadow: 0 0 4px rgba(0,0,0,0.8);
 }
 
 .pink {
@@ -94,11 +103,17 @@
 .ticket-actions {
   min-width: 10rem;
   min-height: 50%;
+  cursor: pointer;
   display: flex;
   transition: all .2s ease-in-out;
+  border-top-left-radius: 2rem;
+  border-bottom-left-radius: 2rem;
+  border-top-right-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+  box-shadow: var(--shadow-15);
 }
 
-.ticket-filters:hover, .ticket-actions:hover{
+.ticket-filters:hover, .ticket-actions:hover {
   transform: scale(1.1);
 }
 
@@ -118,7 +133,7 @@
   color: white;
 }
 
-.close-modal{
+.close-modal {
   background: var(--light-gray);
   min-width: 50%;
   font-size: 2rem;
@@ -130,7 +145,7 @@
   border-bottom-right-radius: 2rem;
 }
 
-.open-modal:hover,.close-modal:hover, .filter:hover, .searchButton:hover{
+.open-modal:hover,.close-modal:hover, .filter:hover, .searchButton:hover {
   opacity: 1;
 }
 
@@ -144,7 +159,6 @@
   grid-gap: 20px;
 }
 
-
 /* modal  */
 .modal {
   position: absolute;
@@ -153,6 +167,12 @@
   width: 30rem;
   top: 15rem;
   left: calc((100vw - 30rem)/2);
+  box-shadow: 0 0 20px rgba(0,0,0,0.8);
+  transition: transform 0.3s;
+}
+
+.modal:hover {
+  transform: scale(1.2);
 }
 
 .modal-textbox {
@@ -194,6 +214,7 @@
   flex-direction: column;
   border-bottom-left-radius: 1rem;
   border-bottom-right-radius: 1rem;
+  box-shadow: 0 20px 20px #777;
 }
 
 .ticket-filter {
@@ -211,21 +232,22 @@
   padding: 0.5rem;
 }
 
-.ticket-delete{
+.ticket-delete {
   width: 15%;
   display: flex;
-  justify-content:center;
+  justify-content: center;
   font-size: 2rem;
   opacity: 0.8;
   transition: transform 0.3s;
   cursor: pointer;
 }
 
-.ticket-delete:hover{
+.ticket-delete:hover {
   opacity: 1;
   transform: scale(1.5);
 }
-.fa-trash-alt{
+
+.fa-trash-alt {
   color: crimson;
   margin: 5px;
 }
@@ -236,6 +258,7 @@
   margin-top: 10%;
   width: 80%;
   align-self: center;
+  font-size: 1.2rem;
 }
 
 .active-filter {
