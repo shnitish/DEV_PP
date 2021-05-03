@@ -34,3 +34,26 @@ function initCell()
     cellsContentDiv.innerHTML = cellsContent;
 }
 initCell();
+
+function initDB()
+{
+    db = [];
+    for(let i = 0; i < 100; i++)
+    {
+        let row = [];
+        for(let j = 0; j < 26; j++)
+        {
+            let name = String.fromCharCode(j + 65) + (i + 1) + "";
+            let cellObject = {
+                name: name,
+                value: "",
+                formula: ""
+            }
+            row.push(cellObject);
+        }
+        db.push(row);
+    }
+    console.log(db);
+}
+
+initDB();
