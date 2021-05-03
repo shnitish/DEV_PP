@@ -47,13 +47,13 @@ function initDB()
             let cellObject = {
                 name: name,
                 value: "",
-                formula: ""
+                formula: "",
+                childrens: []
             }
             row.push(cellObject);
         }
         db.push(row);
     }
-    console.log(db);
 }
 
 initDB();

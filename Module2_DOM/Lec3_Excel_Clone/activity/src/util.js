@@ -7,7 +7,7 @@ function getRowIdColIdFromElement(element)
 }
 
 // replace cell with it's value in the formula bar
-function solveFormula(formula)
+function solveFormula(formula, selfCellObject)
 {
     // "( A1 + A2 )" => "(10 + 10)"
     let formulaComponents = formula.split(" ");
@@ -24,6 +24,13 @@ function solveFormula(formula)
             let {rowId, colId} = getRowIdColIdFromAddress(formulaComponent);
             let cellObject = db[rowId][colId];
             let value = cellObject.value;
+
+            if(selfCellObject)
+            {
+                // push yourself in the childrens array of fomrmula comp cellobj
+                cellObject.childrens.push(selfCellObject.name);
+
+            }
             formula = formula.replace(formulaComponent, value);
         } 
     }
@@ -31,6 +38,23 @@ function solveFormula(formula)
     let computedValue = eval(formula);
     return computedValue;
 }
+
+// update every children if a cell value is updated
+function updateChildren(cellObject)
+{
+    for(let i = 0; i < cellObject.childrens.length; i++)
+    {
+        let childrenName = cellObject.childrens[i];
+        let {rowId, colId} = getRowIdColIdFromAddress(childrenName);
+        let childrenCellObject = db[rowId][colId];
+        let newValue = solveFormula(childrenCellObject.formula);
+
+        document.querySelector(`div[rowid='${rowId}'][colid='${colId}']`).textContent = newValue;
+        childrenCellObject.value = newValue;
+        updateChildren(childrenCellObject);
+    }
+}
+
 
 function getRowIdColIdFromAddress(address)
 {

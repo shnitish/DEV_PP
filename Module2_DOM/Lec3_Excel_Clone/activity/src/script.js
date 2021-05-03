@@ -38,13 +38,14 @@ for(let i = 0; i < allCells.length; i++)
         let colId = e.target.getAttribute("colid");
         let cellObject = db[rowId][colId];
 
-        if(cellValue == cellObject)
+        if(cellObject.value == cellValue)
         {
             return;
         }
 
         // update val on db
         cellObject.value = cellValue;
+        updateChildren(cellObject);
     })
     
 }
@@ -56,7 +57,7 @@ formulaInput.addEventListener("blur", function(e){
     {
         let {rowId, colId} = getRowIdColIdFromElement(lastSelectedCell);
         let cellObject = db[rowId][colId]; 
-        let computedValue = solveFormula(formula);
+        let computedValue = solveFormula(formula, cellObject);
 
         cellObject.formula = formula;
 
@@ -64,5 +65,7 @@ formulaInput.addEventListener("blur", function(e){
         lastSelectedCell.textContent = computedValue;
         // update db after calc
         cellObject.value = computedValue;
+
+        updateChildren(cellObject);
     }
 })
