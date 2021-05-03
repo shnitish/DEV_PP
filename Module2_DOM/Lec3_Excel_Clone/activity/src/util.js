@@ -27,8 +27,9 @@ function solveFormula(formula, selfCellObject)
 
             if(selfCellObject)
             {
-                // push yourself in the childrens array of fomrmula comp cellobj
+                // push yourself in the childrens and parents array of fomrmula comp cellobj
                 cellObject.childrens.push(selfCellObject.name);
+                selfCellObject.parents.push(cellObject.name);
 
             }
             formula = formula.replace(formulaComponent, value);
@@ -55,6 +56,25 @@ function updateChildren(cellObject)
     }
 }
 
+function removeFormula(cellObject)
+{
+    cellObject.formula = "";
+    for(let i = 0; i < cellObject.parents.length; i++)
+    {
+        let parentName = cellObject.parents[i];
+        let {rowId, colId} = getRowIdColIdFromAddress(parentName);
+        let parentCellObject = db[rowId][colId];
+
+        let updatedChildrens = parentCellObject.childrens.filter(function(children)
+        {
+            return children != cellObject.name;
+        })
+
+        parentCellObject.childrens = updatedChildrens;
+    }
+    cellObject.parents = [];
+}
+
 
 function getRowIdColIdFromAddress(address)
 {
@@ -63,3 +83,4 @@ function getRowIdColIdFromAddress(address)
 
     return {rowId, colId};
 }
+

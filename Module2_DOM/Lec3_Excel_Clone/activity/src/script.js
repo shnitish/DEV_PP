@@ -43,9 +43,33 @@ for(let i = 0; i < allCells.length; i++)
             return;
         }
 
+        // if manually update a cell value then, remove it's dependent formula if any, and also remove himself from the parents list
+        if(cellObject.formula)
+        {
+            removeFormula(cellObject);
+            formulaInput.value = "";
+        }
+
         // update val on db
         cellObject.value = cellValue;
         updateChildren(cellObject);
+    })
+
+    // if backspace is used on a cell 
+    allCells[i].addEventListener("keydown", function(e){
+        if(e.key == "Backspace")
+        {
+            let cell = e.target;
+            let {rowId, colId} = getRowIdColIdFromElement(cell);
+            let cellObject = db[rowId][colId];
+            if(cellObject.formula)
+            {
+                cellObject.formula = "";
+                formulaInput.value = "";
+                removeFormula(cellObject);
+                cell.textContent = "";
+            }
+        }
     })
     
 }
