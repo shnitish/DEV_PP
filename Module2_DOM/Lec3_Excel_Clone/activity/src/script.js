@@ -17,13 +17,15 @@ cellsContentDiv.addEventListener("scroll", function(e){
     leftCol.style.left = left + "px";
 })
 
+let rowId;
+let colId;
 // get row and col cell where input was given
 for(let i = 0; i < allCells.length; i++)
 {
     allCells[i].addEventListener("click", function(e){
 
-        let rowId = Number(e.target.getAttribute("rowid"));
-        let colId = Number(e.target.getAttribute("colid"));
+        rowId = Number(e.target.getAttribute("rowid"));
+        colId = Number(e.target.getAttribute("colid"));
         let cellObject = db[rowId][colId];
         let address = String.fromCharCode(65 + colId) + (rowId + 1) + "";
         addressInput.value = address;
@@ -34,8 +36,6 @@ for(let i = 0; i < allCells.length; i++)
     {
         lastSelectedCell = e.target;
         let cellValue = e.target.textContent;
-        let rowId = e.target.getAttribute("rowid");
-        let colId = e.target.getAttribute("colid");
         let cellObject = db[rowId][colId];
 
         if(cellObject.value == cellValue)
@@ -53,6 +53,15 @@ for(let i = 0; i < allCells.length; i++)
         // update val on db
         cellObject.value = cellValue;
         updateChildren(cellObject);
+
+        if(cellObject.visited)
+        {
+            return;
+        }
+
+        // store visitedCells of particular DB and mark it visited
+        cellObject.visited = true;
+        visitedCells.push({rowId: rowId, colId: colId});
     })
 
     // if backspace is used on a cell 
@@ -97,5 +106,10 @@ formulaInput.addEventListener("blur", function(e){
         cellObject.value = computedValue;
 
         updateChildren(cellObject);
+
+        // store visitedCells of particular DB and mark it visited
+        // this mark cell visited when a particular formula is applied to a cell and it's value changes
+        cellObject.visited = true;
+        visitedCells.push({rowId: rowId, colId: colId});
     }
 })
