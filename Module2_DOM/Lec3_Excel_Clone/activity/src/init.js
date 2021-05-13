@@ -35,9 +35,12 @@ function initCell()
 }
 initCell();
 
+let sheetsDB = [];
+let db = []; //active DB
+let visitedCells;
 function initDB()
 {
-    db = [];
+    newSheetDB = [];
     for(let i = 0; i < 100; i++)
     {
         let row = [];
@@ -49,12 +52,17 @@ function initDB()
                 value: "",
                 formula: "",
                 childrens: [],
-                parents: []
+                parents: [],
+                visited: false,
+                fontStyle: {bold: false, underline: false, italic: false}
             }
             row.push(cellObject);
         }
-        db.push(row);
+        newSheetDB.push(row);
     }
+    visitedCells = [];
+    sheetsDB.push({db: newSheetDB, visitedCells: visitedCells});
+    db = newSheetDB;
 }
 
 initDB();
