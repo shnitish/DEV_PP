@@ -36,14 +36,14 @@ let mediaRecorder;
             {
                 // stop recording
                 mediaRecorder.stop();
-                recordButton.innerHTML = "Record";
+                recordButton.querySelector("div").classList.remove("record-animate");
             }
 
             else
             {
                 // start recording
                 mediaRecorder.start();
-                recordButton.innerHTML = "Stop";
+                recordButton.querySelector("div").classList.add("record-animate");
             }
             recordingState = !recordingState;
         });
@@ -69,6 +69,12 @@ function downloadVideo()
 function saveCapture()
 {
     console.log("Saving Photo")
+    captureButton.querySelector("div").classList.add("capture-animate");
+
+    setTimeout(function(){
+        captureButton.querySelector("div").classList.remove("capture-animate");
+    }, 1000);
+    
     let canvas = document.createElement("canvas");    
     canvas.height = videoPlayer.videoHeight;
     canvas.width = videoPlayer.videoWidth;
