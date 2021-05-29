@@ -82,10 +82,19 @@ function downloadVideo()
     console.log("Saving video");
     let videoURL = URL.createObjectURL(recordedData);
 
-    let aTag = document.createElement("a");
-    aTag.download = "video.mp4";
-    aTag.href = videoURL;
-    aTag.click();
+    let intervalTimeout = setInterval(function(){
+        if(db)
+        {
+            saveMedia("video", videoURL);
+            clearInterval(intervalTimeout);
+        }
+    }, 100);
+
+    // skip for now
+    // let aTag = document.createElement("a");
+    // aTag.download = "video.mp4";
+    // aTag.href = videoURL;
+    // aTag.click();
 }
 
 // capture photos
@@ -114,8 +123,19 @@ function saveCapture()
     ctx.drawImage(videoPlayer, 0, 0);
     let imageURL = canvas.toDataURL("image/jpg");
 
-    let aTag = document.createElement("a");
-    aTag.download = "image.jpg";
-    aTag.href = imageURL;
-    aTag.click();
+    // wait until db is initialized
+    let intervalTimeout = setInterval(function()
+    {
+        if(db)
+        {
+            saveMedia("image", imageURL); // save media to db
+            clearInterval(intervalTimeout);
+        }
+    }, 100);
+
+    // skip for now
+    // let aTag = document.createElement("a");
+    // aTag.download = "image.jpg";
+    // aTag.href = imageURL;
+    // aTag.click();
 }
