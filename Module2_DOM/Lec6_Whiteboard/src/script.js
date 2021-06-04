@@ -1,12 +1,14 @@
+let redoBtn = document.querySelector("#redo");
 let canvas = document.querySelector("#canvas");
 let {top: canvasTop} = canvas.getBoundingClientRect();
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight - (canvasTop + 5);
-canvas.addEventListener("resize", function(e)
+window.addEventListener("resize", function()
 {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight - (canvasTop + 5);
+    redrawLine();   // to stop canvas reset when resizing 
 })
 
 // undo redo
@@ -23,8 +25,9 @@ canvas.addEventListener("mousedown", function(e)
     if(redoDB.length)
     {
         redoDB = [];
+        redoBtn.style.opacity = 0.2;
     }
-    
+
     isMouseDown = true;
     let x = e.clientX;
     let y = e.clientY - (canvasTop + 5);

@@ -16,10 +16,12 @@ function undoLine()
     
     //3. redraw Lines
     redrawLine();
+    redo.style.opacity = 1;
 }
 
 function redrawLine()
 {
+    ctx.lineCap = "round";
     for(let i = 0; i < db.length; i++)
     {
         let line = db[i];
@@ -48,6 +50,10 @@ function redoLine()
     if(redoDB.length >= 1)
     {
         let line = redoDB.pop();
+        if(redoDB.length == 0)
+        {
+            redo.style.opacity = 0.2;
+        }
         for(let j = 0; j < line.length; j++)
         {
             let pointObject = line[j];
@@ -67,5 +73,4 @@ function redoLine()
         }
         db.push(line);
     }
-
 }
