@@ -1,5 +1,6 @@
 let pencil = document.querySelector("#pencil");
 let eraser = document.querySelector("#eraser");
+let pencilColors = pencil.querySelectorAll(".pencil-colors div");
 let pencilOptions = pencil.querySelector(".tool-options");
 let eraserOptions = eraser.querySelector(".tool-options");
 let pencilSizeInput = pencil.querySelector("input");
@@ -8,7 +9,17 @@ let eraserSizeInput = eraser.querySelector("input");
 let activeTool = "pencil";
 let currentPencilSize = 1;
 let currentEraserSize = 1;
+let currentPencilColor = "black";
 
+for(let i = 0; i < pencilColors.length; i++)
+{
+    pencilColors[i].addEventListener("click", function(e)
+    {
+        let selectedPencilColor = e.target.className;
+        ctx.strokeStyle = selectedPencilColor;
+        currentPencilColor = selectedPencilColor;
+    });
+}
 pencilSizeInput.addEventListener("change", function()
 {
     let pencilSizeInputVal = pencilSizeInput.value;
@@ -39,7 +50,7 @@ pencil.addEventListener("click", function()
     else
     {
         activeTool = "pencil";
-        ctx.strokeStyle = "black";
+        ctx.strokeStyle = currentPencilColor;
         ctx.lineWidth = currentPencilSize;
         eraserOptions.classList.add("hide");
     }
