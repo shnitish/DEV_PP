@@ -104,3 +104,65 @@
 .hide {
     display: none;
 }
+
+.sticky {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 155px;
+    width: 220px;
+}
+
+.sticky-header {
+    height: 15%;
+    background: #B5D626;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.sticky-header div {
+    height: 80%;
+    width: 12%;
+}
+
+.minimize {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.close {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sticky-content {
+    height: 85%;
+}
+
+textarea {
+    height: 100%;
+    width: 100%;
+    outline: none;
+    border: none;
+    padding: 1rem;
+    background: #DADF84;
+    font-size: 1rem;
+    resize: none;
+    box-shadow: 0 10px 6px -6px #777;
+}
+
+textarea::-webkit-scrollbar 
+{
+    width: 5px;
+    background-color: #DADF84;
+ }
+  
+textarea::-webkit-scrollbar-thumb 
+{
+    border-radius: 15px;
+    background-color: #2E3440; 
+}
+ 
