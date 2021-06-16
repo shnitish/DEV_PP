@@ -31,13 +31,21 @@ class App extends Component
 		this.setState({todos: updatedTodos});
 	}
 
+	addTodo = (todo)=>
+	{
+		let updatedTodos = [...this.state.todos, {id: this.state.todos.length + 1, todo: todo}];
+		this.setState({todos: updatedTodos});
+	}
+
+
 	render()
 	{
 		let todos = this.state.todos;
 		let deleteTodo = this.deleteTodo;
+		let addTodo = this.addTodo;
 		return (
 			<div className="App">
-				<InputBox></InputBox>
+				<InputBox addTodo = {addTodo}></InputBox>
 				<TodosList todos = {todos} deleteTodo = {deleteTodo}></TodosList>
 			</div>
 		);
