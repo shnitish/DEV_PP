@@ -205,7 +205,7 @@
 .font-style {
     display: flex;
     width: 200px;
-    height: 100%;
+    height: 60%;
     justify-content: space-around;
     align-items: center;
     border-right: 1px solid lightgray;
@@ -221,6 +221,42 @@
     border-radius: 5px;
 }
 
+.font-color {
+
+}
+
+
+
+.font-alignment div {
+
+}
+
+.font-alignment .fas {
+
+}
+
+.font-size select {
+    background-color: var(--cell-background);
+    outline: none;
+    border-radius: 2px;
+    height: 100%;
+}
+
+.font-type {
+    width: 110px;
+}
+
+.font-text-size {
+    width: 50px;
+}
+
+.font-color input{
+    /* display: none; */
+}
+
+.cell-color input{
+    /* display: none; */
+}
 .font-style div:hover {
     background: #ecf0f1;
     opacity: 0.5;

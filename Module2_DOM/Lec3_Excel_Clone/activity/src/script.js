@@ -42,12 +42,20 @@ for(let i = 0; i < allCells.length; i++)
         addressInput.value = address;
         formulaInput.value = cellObject.formula;
 
-
+        // bold underline italic
         cellObject.fontStyle.bold ? document.querySelector(".bold").classList.add("active-font-style") : document.querySelector(".bold").classList.remove("active-font-style");
 
         cellObject.fontStyle.underline ? document.querySelector(".underline").classList.add("active-font-style") : document.querySelector(".underline").classList.remove("active-font-style");
 
         cellObject.fontStyle.italic ? document.querySelector(".italic").classList.add("active-font-style") : document.querySelector(".italic").classList.remove("active-font-style");
+
+        // set alignments
+        if(lastSelectedCell)
+        {
+            document.querySelector(".font-alignment .active-font-style").classList.remove("active-font-style");
+        }
+        let textAlignment = cellObject.textAlign;
+        document.querySelector(`.${textAlignment}`).classList.add("active-font-style");
 
     })
     
