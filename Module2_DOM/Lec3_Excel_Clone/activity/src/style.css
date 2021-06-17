@@ -1,8 +1,14 @@
+:root {
+    --cell-background: #f5f6f5;
+    --border-color: lightgray;
+}
+
 * {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
     font-family: 'Open Sans', sans-serif;
+    font-size: 0.9rem;
 }
 
 .add-sheet {
@@ -23,17 +29,15 @@
 .left-col-cell {
     height: 30px;
     width: 30px;
-    border: 1px solid;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .left-col {
-    width: 30px;
-    background: #bdc3c7;
+    background: var(--cell-background);
     position: absolute;
-    top: 30px;
+    top: 25px;
     z-index: 2;
 }
 
@@ -42,7 +46,6 @@
 }
 
 .top-row-cell {
-    border: 1px solid;
     min-height: 30px;
     min-width: 70px;
     display: flex;
@@ -58,18 +61,21 @@
 }
 
 .menu-options {
-    height: 52px;
+    height: 35px;
+    border-bottom: 1px solid lightgray;
 }
 
 .address-content {
-    border: 1px solid;
     height: 30px;
+    display: flex;
+    border: none;
 }
 
 .cells-content {
-    height: calc(100vh - 150px);
+    height: calc(100vh - 97px);
     overflow: auto;
     position: relative;
+    border-top: 1px solid var(--border-color);
 }
 
 .row {
@@ -77,16 +83,18 @@
 }
 
 .cell {
-    border: 1px solid;
     min-height: 30px;
-    min-width: 70px;
+    min-width: 90px;
     max-width: 70px;
+    border-left: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    outline: none;
 }
 
 .top-left-cell {
-    height: 30px;
-    width: 30px;
-    background: lightblue;
+    height: 25px;
+    width: 40px;
+    background: var(--cell-background);
     position: absolute;
     z-index: 3;
 }
@@ -95,15 +103,15 @@
     display: flex;
     position: absolute;
     top: 0px;
-    left: 30px;
-    background: #ecf0f1;
+    left: 40px;
+    background: var(--cell-background);
     z-index: 2;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .top-row-cell {
-    border: 1px solid;
-    min-height: 30px;
-    min-width: 70px;
+    min-height: 25px;
+    min-width: 90px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -114,25 +122,24 @@
 
 .left-col-cell {
     height: 30px;
-    width: 30px;
-    border: 1px solid;
+    width: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .cells {
     position: absolute;
-    top: 30px;
-    left: 30px;
+    top: 25px;
+    left: 40px;
 }
 
 .sheets {
     display: flex;
     align-items: center;
     background: #ecf0f1;
-    /* border: 1px solid; */
-    height: 35px;
+    height: 30px;
 }
 
 .add-sheet .fas {
@@ -222,4 +229,27 @@
 
 .active-font-style {
     background: #ecf0f1;
+}
+
+#address {
+    width: 50px;
+    text-align: center;
+    border: none;
+    border-right: 1px solid var(--border-color);
+}
+
+#formula {
+    width: 100%;
+    outline: none;
+    padding: 5px;
+    border: none;
+}
+
+#fx {
+    width: 50px;
+    border: none;
+    text-align: center;
+    border-right: 1px solid var(--border-color);
+    font-weight: bold;
+    font-style: italic;
 }
