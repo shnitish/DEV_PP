@@ -1,6 +1,8 @@
 :root {
     --cell-background: #f5f6f5;
     --border-color: lightgray;
+    --active-cell: #41b471;
+    --cell-selected: #e5e6e5;
 }
 
 * {
@@ -252,4 +254,13 @@
     border-right: 1px solid var(--border-color);
     font-weight: bold;
     font-style: italic;
+}
+
+.active-cell {
+    border: 3px solid var(--active-cell);
+    box-shadow: 0 8px 6px -6px black;
+}
+
+.cell-selected {
+    background-color: var(--cell-selected);
 }
