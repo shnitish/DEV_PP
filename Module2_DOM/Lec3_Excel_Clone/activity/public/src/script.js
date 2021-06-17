@@ -112,6 +112,11 @@ for(let i = 0; i < allCells.length; i++)
         }
     })
     
+    allCells[i].addEventListener("keyup", function(e)
+    {
+        let cellValue = allCells[i].textContent;
+        socket.emit("cellValue", cellValue);
+    })
 }
 
 // event on formula input box

@@ -14,3 +14,21 @@ socket.on("setRealTimeCell", function(realTimeCellInfo)
   realtimeCell.classList.add("realtime-cell");
   realtimeCell.append(usernameDiv);
 })
+
+socket.on("setCellValue", function(cellValue)
+{
+  let realtimeCell = document.querySelector(".realtime-cell");
+  let childNodes =  realtimeCell.childNodes;
+  if(childNodes.length == 1)
+  {
+    let usernameDiv = childNodes[0];
+    realtimeCell.innerHTML = cellValue;
+    realtimeCell.append(usernameDiv);
+  }
+  else
+  {
+    let usernameDiv = childNodes[1];
+    realtimeCell.innerHTML = cellValue;
+    realtimeCell.append(usernameDiv);
+  }
+})
