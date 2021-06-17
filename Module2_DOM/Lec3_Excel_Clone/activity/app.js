@@ -12,6 +12,26 @@ app.use(express.static("public"));
 
 io.on("connection", function(socket){
     console.log(socket.id + " connected !!!");
+
+    socket.on("userConnected", function(username)
+    {
+        let userObject = {id: socket.id, username: username};
+        userList.push(userObject);
+        console.log(userList);
+    })
+
+    socket.on("cellClicked", function(cellCoordinates)
+    {
+        let username;
+        for(let i = 0; i < userList.length; i++)
+        {
+            if(userList[i].id == socket.id)
+            {
+                username = userList[i].username;
+            }
+        }
+        socket.broadcast.emit("setRealTimeCell", {username, ...cellCoordinates});
+    })
 })
 
 server.listen(5500, function(){

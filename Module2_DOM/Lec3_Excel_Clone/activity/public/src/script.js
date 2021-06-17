@@ -6,6 +6,9 @@ let lastSelectedCell;
 let formulaInput = document.querySelector("#formula");
 let addressInput = document.querySelector("#address");
 
+let username = prompt("Enter your name!");
+socket.emit("userConnected", username);
+
 // fix top row and left most col 
 cellsContentDiv.addEventListener("scroll", function(e){
     let top = e.target.scrollTop;
@@ -57,6 +60,7 @@ for(let i = 0; i < allCells.length; i++)
         let textAlignment = cellObject.textAlign;
         document.querySelector(`.${textAlignment}`).classList.add("active-font-style");
 
+        socket.emit("cellClicked", {rowId, colId});
     })
     
     allCells[i].addEventListener("blur", function(e)
