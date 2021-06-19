@@ -1,10 +1,8 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import "./Pagination.css";
-class Pagination extends Component
-{
+class Pagination extends Component {
 	state = {};
-	render()
-	{
+	render() {
 		let pages = this.props.pages;
 		let currentPage = this.props.currentPage;
 		let previousPage = this.props.previousPage;
@@ -23,8 +21,7 @@ class Pagination extends Component
 							<a className="page-link">Previous</a>
 						</li>
 					)}
-					{pages.map((pageCount) =>
-					{
+					{pages.map((pageCount) => {
 						return pageCount === currentPage ? (
 							<li className="page-item active">
 								<a className="page-link">{pageCount}</a>
@@ -32,8 +29,7 @@ class Pagination extends Component
 						) : (
 							<li
 								className="page-item"
-								onClick={() =>
-								{
+								onClick={() => {
 									setPage(pageCount);
 								}}
 							>
