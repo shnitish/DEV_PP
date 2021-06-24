@@ -7,15 +7,18 @@ import "./Movie.css";
 
 class Movie extends Component {
 	state = { detailedMovieObj: {} };
-  async componentDidMount()
-  {
-    let movieObj = this.props.movieObj;
-    let response = await axios.get(`${API_URL}/movie/${movieObj.id}?api_key=${API_KEY}`);
+	async componentDidMount() {
+		let movieObj = this.props.movieObj;
+		let response = await axios.get(
+			`${API_URL}/movie/${movieObj.id}?api_key=${API_KEY}`
+		);
 
-    let detailedMovieObj = response.data;
-    let posterPath = IMAGE_URL + detailedMovieObj.poster_path;
-    this.setState({detailedMovieObj: {...detailedMovieObj,poster_path: posterPath}});
-  }
+		let detailedMovieObj = response.data;
+		let posterPath = IMAGE_URL + detailedMovieObj.poster_path;
+		this.setState({
+			detailedMovieObj: { ...detailedMovieObj, poster_path: posterPath },
+		});
+	}
 
 	render() {
 		let movieObj = this.props.movieObj;
