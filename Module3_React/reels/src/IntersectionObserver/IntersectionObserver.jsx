@@ -11,7 +11,7 @@ const IntersectionDemo = () => {
 			let child = entry.target.children[0];
 
 			child.play().then(function () {
-				if (entry.isIntersecting == false) {
+				if (entry.isIntersecting === false) {
 					child.pause();
 				}
 			});

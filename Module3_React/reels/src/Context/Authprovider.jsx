@@ -15,7 +15,7 @@ export function AuthProvider({ children }) {
 	};
 
 	const signUp = (email, password) => {
-		return;
+		return firebaseAuth.createUserWithEmailAndPassword(email, password);
 	};
 
 	useEffect(() => {
