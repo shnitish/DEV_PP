@@ -31,7 +31,6 @@ function App()
 const PrivateRoute = ({path, comp: component}) =>
 {
   let {currentUser: isLoggedIn} = useContext(AuthContext);
-
   if (isLoggedIn)
   {
     return (<Route path={path} component={component}></Route>);
