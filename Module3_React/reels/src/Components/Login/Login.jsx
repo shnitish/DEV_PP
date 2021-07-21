@@ -2,8 +2,8 @@ import React, { useContext, useState } from "react";
 import { AuthContext } from "../../Context/Authprovider";
 
 const Login = (props) => {
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
+	const [email, setEmail] = useState("tester@gmail.com");
+	const [password, setPassword] = useState("123456");
 	const [message, setMessage] = useState("");
 	let { login } = useContext(AuthContext);
 

@@ -75,23 +75,24 @@ const Feeds = () => {
 	};
 
 	/*Intersection Observer config*/
-	function callback(entries) {
-		entries.forEach((entry) => {
-			let child = entry.target.children[0];
-
-			child.play().then(function () {
-				if (entry.isIntersecting === false) {
-					child.pause();
-				}
-			});
-		});
-	}
-	let conditionObject = {
-		root: null,
-		threshold: 0.8,
-	};
-
 	useEffect(() => {
+		let conditionObject = {
+			root: null,
+			threshold: 0.8,
+		};
+
+		function callback(entries) {
+			entries.forEach((entry) => {
+				let child = entry.target.children[0];
+
+				child.play().then(function () {
+					if (entry.isIntersecting === false) {
+						child.pause();
+					}
+				});
+			});
+		}
+
 		let observerObject = new IntersectionObserver(callback, conditionObject);
 		let elements = document.querySelectorAll(".video-container #video");
 
@@ -113,6 +114,15 @@ const Feeds = () => {
 			});
 	}, []);
 
+	/*Refresh posts when firebase has new updates*/
+	useEffect(() => {
+		firebaseDB.collection("posts").onSnapshot((snapshot) => {
+			let allPosts = snapshot.docs.map((doc) => {
+				return doc.data();
+			});
+			setPosts(allPosts);
+		});
+	}, []);
 	return (
 		<div>
 			<h1>Feeds</h1>
