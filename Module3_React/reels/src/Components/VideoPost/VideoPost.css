@@ -1,0 +1,15 @@
+.video-post {
+	display: flex;
+	flex-direction: column;
+	border-bottom: 1px solid lightgray;
+}
+
+.video-container {
+	margin-bottom: 15rem;
+	background-color: aliceblue;
+	border-radius: 2rem;
+}
+
+.avatar {
+	padding: 1rem;
+}

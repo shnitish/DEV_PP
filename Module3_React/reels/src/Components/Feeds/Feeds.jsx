@@ -1,16 +1,19 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import VideoPost from "../VideoPost/VideoPost";
+import { uuid } from "uuidv4";
+import { firebaseDB, firebaseStorage } from "../../Config/firebase";
 import { AuthContext } from "../../Context/Authprovider";
 import { Button, CircularProgress } from "@material-ui/core";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
-import { firebaseDB, firebaseStorage } from "../../Config/firebase";
-import { uuid } from "uuidv4";
+import "./Feeds.css";
 
 const Feeds = () => {
-	const { signOut } = useContext(AuthContext);
+	const [posts, setPosts] = useState([]);
 	const [videoFile, setVideoFile] = useState(null);
 	const [uploadProgress, setUploadProgress] = useState(0);
 	const [uploadClicked, setUploadClicked] = useState(false);
-	const { currentUser } = useContext(AuthContext);
+
+	const { signOut, currentUser } = useContext(AuthContext);
 
 	const handle_Log_Out = async (props) => {
 		try {
@@ -29,6 +32,10 @@ const Feeds = () => {
 	const handle_Upload_File = async () => {
 		try {
 			let uid = currentUser.uid;
+			if (videoFile == null) {
+				console.log("No video selected !");
+				return;
+			}
 			const uploadVideoObject = firebaseStorage
 				.ref(`/profilePhotos/${uid}/${Date.now()}.mp4`)
 				.put(videoFile);
@@ -67,6 +74,19 @@ const Feeds = () => {
 		}
 	};
 
+	/*Load all posts object from firebase and set state*/
+	useEffect(() => {
+		firebaseDB
+			.collection("posts")
+			.get()
+			.then((snapshot) => {
+				let allPosts = snapshot.docs.map((doc) => {
+					return doc.data();
+				});
+				setPosts(allPosts);
+			});
+	}, []);
+
 	return (
 		<div>
 			<h1>Feeds</h1>
@@ -82,17 +102,28 @@ const Feeds = () => {
 					>
 						Upload
 					</Button>
-					<ShowProgress
+					<ShowUploadProgress
 						progress={uploadProgress}
 						isUploading={uploadClicked}
-					></ShowProgress>
+					></ShowUploadProgress>
 				</label>
+			</div>
+			<div className="feeds-video-list">
+				{posts.map((postObj) => {
+					return (
+						<VideoPost
+							key={postObj.pid}
+							uid={postObj.uid}
+							postObj={postObj}
+						></VideoPost>
+					);
+				})}
 			</div>
 		</div>
 	);
 };
 
-const ShowProgress = ({ progress, isUploading }) => {
+const ShowUploadProgress = ({ progress, isUploading }) => {
 	if (isUploading === true) {
 		return (
 			<CircularProgress
