@@ -74,6 +74,32 @@ const Feeds = () => {
 		}
 	};
 
+	/*Intersection Observer config*/
+	function callback(entries) {
+		entries.forEach((entry) => {
+			let child = entry.target.children[0];
+
+			child.play().then(function () {
+				if (entry.isIntersecting === false) {
+					child.pause();
+				}
+			});
+		});
+	}
+	let conditionObject = {
+		root: null,
+		threshold: 0.8,
+	};
+
+	useEffect(() => {
+		let observerObject = new IntersectionObserver(callback, conditionObject);
+		let elements = document.querySelectorAll(".video-container #video");
+
+		elements.forEach((e1) => {
+			observerObject.observe(e1);
+		});
+	}, [posts]);
+
 	/*Load all posts object from firebase and set state*/
 	useEffect(() => {
 		firebaseDB
