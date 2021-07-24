@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import VideoPost from "../VideoPost/VideoPost";
-import { firebaseDB, } from "../../Config/firebase";
+import { firebaseDB } from "../../Config/firebase";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
 import "./Feeds.css";
 
 const Feeds = () => {
+	const [loadingComp, setLoadingComps] = useState(true);
 	const [posts, setPosts] = useState([]);
 
 	/*Intersection Observer config*/
@@ -34,7 +37,7 @@ const Feeds = () => {
 	}, [posts]);
 
 	/*Load all posts object from firebase and set state*/
-	useEffect(() => {
+	const loadFeed = () => {
 		firebaseDB
 			.collection("posts")
 			.get()
@@ -43,7 +46,12 @@ const Feeds = () => {
 					return doc.data();
 				});
 				setPosts(allPosts);
+				setLoadingComps(false);
 			});
+	};
+
+	useEffect(() => {
+		loadFeed();
 	}, []);
 
 	/*Refresh posts when firebase has new updates*/
@@ -55,20 +63,27 @@ const Feeds = () => {
 			setPosts(allPosts);
 		});
 	}, []);
-	
+
 	return (
 		<div>
 			<h1>Feeds</h1>
 			<div className="feeds-video-list">
-				{posts.map((postObj) => {
-					return (
-						<VideoPost
-							key={postObj.pid}
-							uid={postObj.uid}
-							postObj={postObj}
-						></VideoPost>
-					);
-				})}
+				{loadingComp ? (
+					<CircularProgress
+						variant="indeterminate"
+						id="circular-loading"
+					></CircularProgress>
+				) : (
+					posts.map((postObj) => {
+						return (
+							<VideoPost
+								key={postObj.pid}
+								uid={postObj.uid}
+								postObj={postObj}
+							></VideoPost>
+						);
+					})
+				)}
 			</div>
 		</div>
 	);

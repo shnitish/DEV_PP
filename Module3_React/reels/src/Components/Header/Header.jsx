@@ -1,35 +1,11 @@
 import { React, useContext } from "react";
 import { AppBar, Toolbar, makeStyles, Button } from "@material-ui/core";
 import { AuthContext } from "../../Context/Authprovider";
-import Upload from "../Upload/Upload";
+import Upload from "../../Components/Upload/Upload";
 
 const useStyles = makeStyles((theme) => ({
-	text: {
-		padding: theme.spacing(2, 2, 0),
-	},
-	paper: {
-		paddingBottom: 50,
-	},
-	list: {
-		marginBottom: theme.spacing(2),
-	},
-	subheader: {
-		backgroundColor: theme.palette.background.paper,
-	},
-	appBar: {
-		// top: "auto",
-		// bottom: 1000,
-	},
 	grow: {
 		flexGrow: 1,
-	},
-	fabButton: {
-		position: "absolute",
-		zIndex: 1,
-		top: 15,
-		left: 0,
-		right: 0,
-		margin: "0 auto",
 	},
 }));
 
@@ -59,15 +35,10 @@ const Header = () => {
 	};
 
 	return (
-		<AppBar
-			id="header"
-			position="sticky"
-			color="white"
-			className={classes.appBar}
-		>
+		<AppBar id="header" position="sticky" color="white">
 			<Toolbar>
 				{currentUser != null ? (
-					<div className="uploadVideo">
+					<div className="upload-Video">
 						<label>
 							<Upload></Upload>
 						</label>

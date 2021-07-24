@@ -29,3 +29,11 @@
 	text-decoration: none;
 	color: black;
 }
+
+video::-webkit-media-controls {
+	visibility: hidden;
+}
+
+video::-webkit-media-controls-enclosure {
+	visibility: visible;
+}

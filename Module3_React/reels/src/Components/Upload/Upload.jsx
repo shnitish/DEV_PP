@@ -1,55 +1,38 @@
 import { React, useState, useContext } from "react";
-import Modal from "@material-ui/core/Modal";
-import { makeStyles } from "@material-ui/core/styles";
-import { Button, LinearProgress } from "@material-ui/core";
+import {
+	Button,
+	List,
+	ListItem,
+	DialogTitle,
+	Dialog,
+	LinearProgress,
+	Fab,
+} from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
+import { makeStyles } from "@material-ui/core/styles";
 import { AuthContext } from "../../Context/Authprovider";
 import { firebaseDB, firebaseStorage } from "../../Config/firebase";
 import { uuid } from "uuidv4";
 
-function rand() {
-	return Math.round(Math.random() * 20) - 10;
-}
-
-function getModalStyle() {
-	const top = 50 + rand();
-	const left = 50 + rand();
-
-	return {
-		top: `${top}%`,
-		left: `${left}%`,
-		transform: `translate(-${top}%, -${left}%)`,
-	};
-}
-
-const useStyles = makeStyles((theme) => ({
-	paper: {
-		position: "absolute",
-		width: 400,
-		backgroundColor: theme.palette.background.paper,
-		border: "2px solid #000",
-		boxShadow: theme.shadows[5],
-		padding: theme.spacing(2, 4, 3),
-	},
+const useStyles = makeStyles(() => ({
 	fabButton: {
 		position: "absolute",
 		zIndex: 1,
-		top: 15,
 		left: 0,
 		right: 0,
 		margin: "0 auto",
 	},
 }));
 
-const Upload = () => {
+function SimpleDialog({ open, onClose }) {
 	const [videoFile, setVideoFile] = useState(null);
 	const [uploadProgress, setUploadProgress] = useState(0);
 	const [uploadClicked, setUploadClicked] = useState(false);
-	const [modalStyle] = useState(getModalStyle);
-	const [open, setOpen] = useState(false);
 	const { currentUser } = useContext(AuthContext);
 
-	const classes = useStyles();
+	const handleClose = () => {
+		onClose("");
+	};
 
 	const handleInputFile = (e) => {
 		let file = e.target.files[0];
@@ -101,7 +84,37 @@ const Upload = () => {
 		}
 	};
 
-	const handleOpen = () => {
+	return (
+		<Dialog
+			onClose={handleClose}
+			aria-labelledby="simple-dialog-title"
+			open={open}
+		>
+			<DialogTitle id="simple-dialog-title">
+				Select a file to upload
+			</DialogTitle>
+			<List>
+				<ListItem>
+					<input type="file" onChange={handleInputFile} />
+					<Button variant="contained" color="primary" onClick={uploadFile}>
+						Upload
+					</Button>
+				</ListItem>
+				<ShowUploadProgress
+					progress={uploadProgress}
+					isUploading={uploadClicked}
+				></ShowUploadProgress>
+			</List>
+		</Dialog>
+	);
+}
+
+const Upload = () => {
+	const classes = useStyles();
+
+	const [open, setOpen] = useState(false);
+
+	const handleClickOpen = () => {
 		setOpen(true);
 	};
 
@@ -109,40 +122,17 @@ const Upload = () => {
 		setOpen(false);
 	};
 
-	const body = (
-		<div style={modalStyle} className={classes.paper}>
-			<h2 id="simple-modal-title">Choose File to upload</h2>
-			<p id="simple-modal-description">
-				<input type="file" onChange={handleInputFile} />
-				<Button variant="contained" color="primary" onClick={uploadFile}>
-					Upload
-				</Button>
-				<ShowUploadProgress
-					progress={uploadProgress}
-					isUploading={uploadClicked}
-				></ShowUploadProgress>
-			</p>
-		</div>
-	);
-
 	return (
 		<div>
-			<Button
-				variant="contained"
+			<Fab
 				color="primary"
-				onClick={handleOpen}
+				aria-label="add"
 				className={classes.fabButton}
+				onClick={handleClickOpen}
 			>
 				<AddIcon />
-			</Button>
-			<Modal
-				open={open}
-				onClose={handleClose}
-				aria-labelledby="simple-modal-title"
-				aria-describedby="simple-modal-description"
-			>
-				{body}
-			</Modal>
+			</Fab>
+			<SimpleDialog open={open} onClose={handleClose} />
 		</div>
 	);
 };
