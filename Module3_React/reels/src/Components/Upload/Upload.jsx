@@ -11,7 +11,7 @@ import {
 import AddIcon from "@material-ui/icons/Add";
 import { makeStyles } from "@material-ui/core/styles";
 import { AuthContext } from "../../Context/Authprovider";
-import { firebaseDB, firebaseStorage } from "../../Config/firebase";
+import { firebaseDB, firebaseStorage, timeStamp } from "../../Config/firebase";
 import { uuid } from "uuidv4";
 
 const useStyles = makeStyles(() => ({
@@ -28,6 +28,7 @@ function SimpleDialog({ open, onClose }) {
 	const [videoFile, setVideoFile] = useState(null);
 	const [uploadProgress, setUploadProgress] = useState(0);
 	const [uploadClicked, setUploadClicked] = useState(false);
+	const [uploadVideoError, setUploadVideoError] = useState("");
 	const { currentUser } = useContext(AuthContext);
 
 	const handleClose = () => {
@@ -41,11 +42,17 @@ function SimpleDialog({ open, onClose }) {
 
 	const uploadFile = async () => {
 		try {
-			let uid = currentUser.uid;
+			if (videoFile.size / 1000000 > 35) {
+				setUploadVideoError("Selected file exceeds 25MB cannot upload");
+				return;
+			}
+
 			if (videoFile == null) {
 				console.log("No video selected !");
 				return;
 			}
+
+			let uid = currentUser.uid;
 			const uploadVideoObject = firebaseStorage
 				.ref(`/profilePhotos/${uid}/${Date.now()}.mp4`)
 				.put(videoFile);
@@ -65,6 +72,7 @@ function SimpleDialog({ open, onClose }) {
 
 			async function fun3() {
 				setUploadClicked(false);
+				setUploadVideoError("");
 				let videoURL = await uploadVideoObject.snapshot.ref.getDownloadURL();
 				let pid = uuid();
 				await firebaseDB.collection("posts").doc(pid).set({
@@ -73,11 +81,13 @@ function SimpleDialog({ open, onClose }) {
 					comments: [],
 					likes: [],
 					videoLink: videoURL,
+					createdAt: timeStamp(),
 				});
 				let doc = await firebaseDB.collection("users").doc(uid).get();
 				let document = doc.data();
 				document.postsCreated.push(pid);
 				await firebaseDB.collection("users").doc(uid).set(document);
+				onClose("");
 			}
 		} catch (err) {
 			console.log(err);
@@ -104,6 +114,7 @@ function SimpleDialog({ open, onClose }) {
 					progress={uploadProgress}
 					isUploading={uploadClicked}
 				></ShowUploadProgress>
+				<p>{uploadVideoError}</p>
 			</List>
 		</Dialog>
 	);

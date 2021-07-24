@@ -56,12 +56,15 @@ const Feeds = () => {
 
 	/*Refresh posts when firebase has new updates*/
 	useEffect(() => {
-		firebaseDB.collection("posts").onSnapshot((snapshot) => {
-			let allPosts = snapshot.docs.map((doc) => {
-				return doc.data();
+		firebaseDB
+			.collection("posts")
+			.orderBy("createdAt", "desc")
+			.onSnapshot((snapshot) => {
+				let allPosts = snapshot.docs.map((doc) => {
+					return doc.data();
+				});
+				setPosts(allPosts);
 			});
-			setPosts(allPosts);
-		});
 	}, []);
 
 	return (
