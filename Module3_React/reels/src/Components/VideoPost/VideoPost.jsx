@@ -31,8 +31,6 @@ const VideoPost = ({ pid, uid, postObj }) => {
 const Video = ({ url, name, src, date }) => {
 	let styles = {
 		height: "80vh",
-		// margin: "5rem",
-		border: "1px solid black",
 	};
 	return (
 		<div className="video-post">
