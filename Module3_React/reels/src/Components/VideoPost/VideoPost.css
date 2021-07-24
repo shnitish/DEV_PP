@@ -19,12 +19,6 @@
 	align-items: center;
 }
 
-.name {
-	margin-left: 10px;
-	font-weight: bold;
-	font-size: 17px;
-}
-
 .link {
 	text-decoration: none;
 	color: black;
@@ -36,4 +30,16 @@ video::-webkit-media-controls {
 
 video::-webkit-media-controls-enclosure {
 	visibility: visible;
+}
+
+.name {
+	margin: 0;
+	font-size: 1.4rem;
+	font-weight: bold;
+}
+
+.post-date {
+	margin: 0;
+	padding: 0px;
+	font-size: 13px;
 }

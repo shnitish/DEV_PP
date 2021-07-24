@@ -6,7 +6,6 @@ import "./VideoPost.css";
 
 const VideoPost = ({ pid, uid, postObj }) => {
 	const [userObject, setUserObject] = useState({});
-
 	firebaseDB
 		.collection("users")
 		.doc(uid)
@@ -23,12 +22,13 @@ const VideoPost = ({ pid, uid, postObj }) => {
 				url={userObject.profileImageUrl}
 				name={userObject.username}
 				src={postObj.videoLink}
+				date={JSON.stringify(postObj.createdAt.toDate()).slice(1, 11)}
 			></Video>
 		</div>
 	);
 };
 
-const Video = ({ url, name, src }) => {
+const Video = ({ url, name, src, date }) => {
 	let styles = {
 		height: "80vh",
 		// margin: "5rem",
@@ -41,8 +41,9 @@ const Video = ({ url, name, src }) => {
 					<div className="avatar">
 						<Avatar src={url}></Avatar>
 					</div>
-					<div className="name">
-						<p>{name}</p>
+					<div className="info">
+						<p className="name">{name}</p>
+						<p className="post-date">{date}</p>
 					</div>
 				</div>
 			</Link>
